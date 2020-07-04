@@ -1,17 +1,23 @@
 var User = require('../models/user.model');
 var cloudinary = require('cloudinary');
 
-module.exports.index = async function(req, res) {
-  var id = req.signedCookies.userId;
-  var user = await User.findById(id);
-   if(!user.avatarUrl) {
-    await User.findByIdAndUpdate(id, {
-      $set: { avatarUrl: 'https://res.cloudinary.com/huyhoang/image/upload/v1592217733/qrsdkpnljrtvg52crqzh.png' }
+module.exports.index = async function(req, res, next) {
+  try {
+    var a;
+    a*b();
+    var id = req.signedCookies.userId;
+    var user = await User.findById(id);
+     if(!user.avatarUrl) {
+      await User.findByIdAndUpdate(id, {
+        $set: { avatarUrl: 'https://res.cloudinary.com/huyhoang/image/upload/v1592217733/qrsdkpnljrtvg52crqzh.png' }
+      });
+     }
+    res.render('./profile/index.pug', {
+      user: user
     });
-   }
-  res.render('./profile/index.pug', {
-    user: user
-  });
+  } catch (error){
+    next(error);
+  }
 }
 
 module.exports.avatar = async function(req, res) {
