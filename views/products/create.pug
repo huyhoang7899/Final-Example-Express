@@ -1,0 +1,18 @@
+extends ../../layouts/layout.pug
+
+block content
+  h1 Create Product
+
+  if(errors)
+    each error in errors
+      .alert.alert-danger= error
+
+  form(action="/shops/" + shop.id + "/create" method="POST")
+    .form-group
+      label(for="inputTitle") Title
+      input#inputTitle.form-control(type="text", name="title", value=values ? values.title : "")
+    .form-group
+      label(for="inputAuthor") Author
+      input#inputNameShop.form-control(type="text", name="description", value=values ? values.description : "")
+    button.btn.btn-primary(type='submit') Create
+

@@ -3,8 +3,6 @@ var cloudinary = require('cloudinary');
 
 module.exports.index = async function(req, res, next) {
   try {
-    var a;
-    a*b();
     var id = req.signedCookies.userId;
     var user = await User.findById(id);
      if(!user.avatarUrl) {

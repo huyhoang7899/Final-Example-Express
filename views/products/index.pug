@@ -1,0 +1,29 @@
+extends ../../layouts/layout.pug
+
+block content
+  h1
+    span Products
+    a.btn.btn-success.ml-3(href="/shops/" + id + "/create") Create Product
+
+
+  table.table.mt-2
+    thead.thead-dark
+      tr
+        //- th(scope='col') Book cover
+        th(scope='col') Name
+        th(scope='col') Author
+        th(scope='col') Action
+    tbody
+      each product in products
+        tr
+          //- td.align-middle
+          //-   img(src=book.coverUrl width="50" height="50")
+          td.align-middle=product.title
+          td.align-middle= product.description
+          td
+            a.btn.btn-info.mr-2(href="/cart/add/" + product.id) Add to cart
+            if(userId == shop.userId)
+              a.btn.btn-info.mr-2(href="/shops/" + product.id + "/update") Update
+              a.btn.btn-info(href="/shops/" + product.id + "/delete") Delete
+
+

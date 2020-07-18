@@ -1,0 +1,10 @@
+extends ../../layouts/layout.pug
+
+block content
+  h1
+    span Shops
+    a.btn.btn-success.ml-3(href="/shops/create") Create Shop
+
+  each shop in shops
+    a.btn.btn-secondary.mb-3.d-flex.w-25(href='/shops/' + shop.id + '/books', role='button') #{shop.name}
+

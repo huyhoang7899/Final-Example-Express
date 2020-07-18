@@ -1,6 +1,7 @@
 var Session = require('../models/session.model');
 var Book = require('../models/book.model');
 var Transaction = require('../models/transaction.model');
+var { Shop, Product } = require('../models/shop.model');
 
 module.exports.index = async function(req, res) {
   var sessionId = req.signedCookies.sessionId;
@@ -9,6 +10,9 @@ module.exports.index = async function(req, res) {
   var booksItem = []
   for(var item in items.cart) {
     var book = await Book.findById(item);
+    if (!book) {
+      book = await Product.findById(item);
+    }
     book.amount = items.cart[item];
     booksItem.push(book);
   }
@@ -31,7 +35,7 @@ module.exports.addToCart = async function(req, res) {
     $inc: { ['cart.' + bookId]: 1 }
   })
 
-  res.redirect('/books')
+  res.redirect('back')
 
 };
 
@@ -44,6 +48,9 @@ module.exports.rental = async function (req, res) {
   var books = []
   for(var item in items.cart) {
     var book = await Book.findById(item).lean();
+    if (!book) {
+      book = await Product.findById(item).lean();
+    }
     book.isComplete = false;
     book.amount = items.cart[item];
     book.bookId = item;

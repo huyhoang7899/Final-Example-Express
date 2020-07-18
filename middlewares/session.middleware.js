@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
       res.cookie("sessionId", sessionId, {
       signed: true
   });
-  await Session.insertMany({ sessionId: sessionId});
+  await Session.create({ sessionId: sessionId});
   }
 
   next();
